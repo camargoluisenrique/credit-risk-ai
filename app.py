@@ -21,7 +21,7 @@ model, metrics = load_model()
 # =========================
 # TITLE
 # =========================
-st.title("💳 AI Credit Risk Scoring")
+st.title(" AI Credit Risk Scoring")
 
 st.markdown("""
 This application simulates a real-world credit risk system used in fintech and banking.  
@@ -31,7 +31,7 @@ It predicts the probability of default and supports loan approval decisions.
 # =========================
 # INPUT
 # =========================
-st.subheader("📋 Applicant Information")
+st.subheader(" Applicant Information")
 
 col1, col2 = st.columns(2)
 
@@ -67,7 +67,7 @@ sex = sex_map[st.selectbox("Sex", list(sex_map.keys()))]
 # =========================
 # PREDICT
 # =========================
-if st.button("🔍 Evaluate Risk"):
+if st.button(" Evaluate Risk"):
 
     input_data = {
         "Age": age,
@@ -86,24 +86,24 @@ if st.button("🔍 Evaluate Risk"):
     prob = result["probability"]
     score = result["score"]
 
-    st.subheader("📊 Risk Evaluation")
+    st.subheader(" Risk Evaluation")
 
     st.metric("Credit Risk Score", f"{score}/100")
     st.progress(score / 100)
 
-    if score > 70:
-        st.error("🚨 HIGH RISK - Loan Rejected")
-    elif score > 40:
-        st.warning("⚠️ MEDIUM RISK - Manual Review")
-    else:
-        st.success("✅ LOW RISK - Loan Approved")
+    if result["decision"] == "REJECT":
+    st.error("High Risk - Loan Rejected")
+elif result["decision"] == "REVIEW":
+    st.warning("Medium Risk - Manual Review")
+else:
+    st.success("Low Risk - Loan Approved")
 
     st.write(f"**Probability of Default:** {prob:.2%}")
 
     # =========================
     # EXPLANATION
     # =========================
-    st.subheader("🧠 Why this decision?")
+    st.subheader(" Why this decision?")
 
     explanation = explain_prediction(model, input_data)
 
@@ -116,7 +116,7 @@ if st.button("🔍 Evaluate Risk"):
     # =========================
     # MODEL COMPARISON
     # =========================
-    st.subheader("📊 Model Comparison")
+    st.subheader(" Model Comparison")
 
     st.write(f"Logistic Regression AUC: {metrics['log_auc']:.3f}")
     st.write(f"Random Forest AUC: {metrics['rf_auc']:.3f}")
@@ -124,7 +124,7 @@ if st.button("🔍 Evaluate Risk"):
     # =========================
     # ROC CURVE
     # =========================
-    st.subheader("📈 ROC Curve")
+    st.subheader(" ROC Curve")
 
     y_test = metrics["y_test"]
     X_test = metrics["X_test"]

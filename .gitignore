@@ -4,3 +4,5 @@ __pycache__/
 .venv
 venv/
 data/german_credit_data.csv
+*.pkl
+data/archive/
